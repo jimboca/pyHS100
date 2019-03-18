@@ -5,7 +5,9 @@ from typing import Any, Dict, Optional, Tuple
 TPLINK_KELVIN = {'LB130': (2500, 9000),
                  'LB120': (2700, 6500),
                  'LB230': (2500, 9000),
-                 'KB130': (2500, 9000)}
+                 'KB130': (2500, 9000),
+                 'KL130': (2500, 9000),
+                 'KL120': (2700, 6500)}
 
 
 class SmartBulb(SmartDevice):
@@ -142,10 +144,10 @@ class SmartBulb(SmartDevice):
         if not self.is_color:
             return None
 
-        if not isinstance(state[0], int) or not (0 <= state[0] <= 359):
+        if not isinstance(state[0], int) or not (0 <= state[0] <= 360):
             raise SmartDeviceException(
                     'Invalid hue value: {} '
-                    '(valid range: 0-359)'.format(state[0]))
+                    '(valid range: 0-360)'.format(state[0]))
 
         if not isinstance(state[1], int) or not (0 <= state[1] <= 100):
             raise SmartDeviceException(
@@ -283,6 +285,7 @@ class SmartBulb(SmartDevice):
         }  # type: Dict[str, Any]
         if self.is_variable_color_temp:
             info["Color temperature"] = self.color_temp
+            info["Valid temperature range"] = self.valid_temperature_range
         if self.is_color:
             info["HSV"] = self.hsv
 

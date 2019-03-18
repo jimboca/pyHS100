@@ -129,6 +129,15 @@ def state(ctx, dev):
 
     click.echo(click.style("Device state: %s" % "ON" if dev.is_on else "OFF",
                            fg="green" if dev.is_on else "red"))
+    if dev.num_children > 0:
+        is_on = dev.is_on()
+        aliases = dev.get_alias()
+        for child in range(dev.num_children):
+            click.echo(
+                click.style("  * %s state: %s" %
+                            (aliases[child],
+                             "ON" if is_on[child] else "OFF"),
+                            fg="green" if is_on[child] else "red"))
     click.echo("Host/IP: %s" % dev.host)
     for k, v in dev.state_information.items():
         click.echo("%s: %s" % (k, v))
@@ -217,6 +226,9 @@ def temperature(dev, temperature):
         click.echo("Color temperature: %s" % dev.color_temp)
         if dev.valid_temperature_range != (0, 0):
             click.echo("(min: %s, max: %s)" % dev.valid_temperature_range)
+        else:
+            click.echo("Temperature range unknown, please open a github issue"
+                       " or a pull request for model '%s'" % dev.model)
     else:
         click.echo("Setting color temperature to %s" % temperature)
         dev.color_temp = temperature

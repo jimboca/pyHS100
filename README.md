@@ -11,6 +11,7 @@ Python Library to control TPLink smart plugs/switches and smart bulbs.
 
 * Plugs
   * HS100
+  * HS103
   * HS105
   * HS110
 * Power Strips
@@ -24,6 +25,10 @@ Python Library to control TPLink smart plugs/switches and smart bulbs.
   * LB110
   * LB120
   * LB130
+  * LB230
+  * KL110
+  * KL120
+  * KL130
 
 # Usage
 
@@ -209,7 +214,7 @@ if bulb.is_variable_color_temp:
 
 ### Setting the color
 
-Hue is given in degrees (0-359) and saturation and value in percentage.
+Hue is given in degrees (0-360) and saturation and value in percentage.
 
 ```python
 print(bulb.hsv)
