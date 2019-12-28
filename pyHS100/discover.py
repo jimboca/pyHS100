@@ -1,3 +1,4 @@
+
 import socket
 import logging
 import json
@@ -16,6 +17,7 @@ class Discover:
     @staticmethod
     def discover(protocol: TPLinkSmartHomeProtocol = None,
                  port: int = 9999,
+                 target: str = "255.255.255.255",
                  timeout: int = 3) -> Dict[str, SmartDevice]:
         """
         Sends discovery message to 255.255.255.255:9999 in order
@@ -30,8 +32,6 @@ class Discover:
         """
         if protocol is None:
             protocol = TPLinkSmartHomeProtocol()
-
-        target = "255.255.255.255"
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
